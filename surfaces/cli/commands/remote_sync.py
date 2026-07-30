@@ -2,13 +2,14 @@
 
 from __future__ import annotations
 
-import click
 import sys
 
 from config.constants.filestorage import (
     DEFAULT_REMOTE_SYNC_PREFIX,
     DEFAULT_REMOTE_SYNC_PROVIDER,
 )
+
+import click
 from platform.common.exit_codes import ERROR, SUCCESS
 from platform.filestorage import RemoteSyncError
 from platform.filestorage.enums import RemoteSyncField, RemoteSyncSubcommand
