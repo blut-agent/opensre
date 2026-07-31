@@ -1015,7 +1015,7 @@ def test_failing_progress_callback_does_not_abort_push(
         raise RuntimeError("callback exploded")
 
     # Act — must not raise
-    report = push(store, roots=roots, on_progress=exploding_callback)
+    push(store, roots=roots, on_progress=exploding_callback)
 
     # Assert: both files uploaded despite callback failures
     assert len(store.objects) == 2

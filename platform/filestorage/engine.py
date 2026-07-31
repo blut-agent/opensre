@@ -14,6 +14,7 @@ interrupted pull cannot leave a half-written session behind.
 
 from __future__ import annotations
 
+import contextlib
 import hashlib
 import logging
 import os
@@ -173,10 +174,8 @@ def push(
         result.uploaded.append(key)
         result.uploaded_bytes += len(data)
         if on_progress is not None:
-            try:
+            with contextlib.suppress(Exception):
                 on_progress("uploaded", key)
-            except Exception:
-                pass
     return result
 
 
@@ -212,10 +211,8 @@ def pull(
         _write_atomically(target, data)
         result.downloaded.append(obj.key)
         if on_progress is not None:
-            try:
+            with contextlib.suppress(Exception):
                 on_progress("downloaded", obj.key)
-            except Exception:
-                pass
     return result
 
 
