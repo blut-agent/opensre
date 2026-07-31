@@ -944,9 +944,7 @@ def test_list_prefix_is_delimited_so_a_sibling_bucket_path_cannot_match() -> Non
 # ── Progress callbacks ──────────────────────────────────────────────────────
 
 
-def test_push_calls_on_progress_for_each_file(
-    home: Path, roots: tuple[SyncRoot, ...]
-) -> None:
+def test_push_calls_on_progress_for_each_file(home: Path, roots: tuple[SyncRoot, ...]) -> None:
     """Progress callback fires once per uploaded file."""
     store = FakeObjectStore()
     events: list[tuple[str, str]] = []
@@ -987,15 +985,18 @@ def test_run_sync_forwards_progress_for_both_directions(
         SyncRoot(name=SyncRootName.MEMORY, path=second / "memory"),
     )
     events: list[tuple[str, str]] = []
-    run_sync(store, direction=SyncDirection.BOTH, roots=second_roots, on_progress=lambda action, key: events.append((action, key)))
+    run_sync(
+        store,
+        direction=SyncDirection.BOTH,
+        roots=second_roots,
+        on_progress=lambda action, key: events.append((action, key)),
+    )
     # Pull gets 2 files; push finds nothing new to upload.
     assert len(events) == 2
     assert all(e[0] == "downloaded" for e in events)
 
 
-def test_none_progress_is_ignored(
-    home: Path, roots: tuple[SyncRoot, ...]
-) -> None:
+def test_none_progress_is_ignored(home: Path, roots: tuple[SyncRoot, ...]) -> None:
     """Passing None (or omitting the arg) does not raise."""
     store = FakeObjectStore()
     push(store, roots=roots, on_progress=None)

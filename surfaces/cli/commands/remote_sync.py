@@ -52,6 +52,7 @@ def sync_now_command(pull_only: bool, push_only: bool) -> None:
     """Sync now: pull remote changes, then push local ones."""
     # Progress callback: prints per-file only when stdout is a TTY.
     if sys.stdout.isatty():
+
         def _progress(action: str, key: str) -> None:
             safe_key = key.encode("ascii", errors="replace").decode("ascii")
             click.echo(f"  {action:>10} {safe_key}")
